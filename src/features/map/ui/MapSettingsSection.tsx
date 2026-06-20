@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import AdUnit from "@/shared/ui/AdUnit";
-import { AD_SLOT_INFEED } from "@/core/config";
+import { AD_SLOT_INFEED, ADS_INFEED_ENABLED } from "@/core/config";
 import { createCustomLayoutOption } from "@/features/layout/infrastructure/layoutRepository";
 import {
   DISPLAY_PALETTE_KEYS,
@@ -441,7 +441,11 @@ export default function MapSettingsSection({
                     />
                   ))}
                 </div>
-                <AdUnit slot={AD_SLOT_INFEED} format="rectangle" />
+                <AdUnit
+                  slot={AD_SLOT_INFEED}
+                  enabled={ADS_INFEED_ENABLED}
+                  format="rectangle"
+                />
               </section>
             ))}
           </div>

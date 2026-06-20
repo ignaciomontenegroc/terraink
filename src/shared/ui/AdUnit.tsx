@@ -3,6 +3,8 @@ import { ADSENSE_AD_CLIENT } from "@/core/config";
 
 interface AdUnitProps {
   slot: string;
+  /** Whether this ad type is enabled (driven by its VITE_ADS_*_ENABLED flag). */
+  enabled?: boolean;
   format?: "auto" | "rectangle" | "horizontal" | "vertical";
   label?: string;
   className?: string;
@@ -12,6 +14,7 @@ const HIDE_AFTER_MS = 10_000;
 
 export default function AdUnit({
   slot,
+  enabled = true,
   format = "auto",
   label = "Ads keep Terraink free",
   className,
@@ -21,7 +24,7 @@ export default function AdUnit({
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    if (!slot || !ADSENSE_AD_CLIENT) return;
+    if (!enabled || !slot || !ADSENSE_AD_CLIENT) return;
 
     // Push the ad unit — only once per mount
     if (!pushed.current) {
@@ -57,9 +60,9 @@ export default function AdUnit({
       clearTimeout(timer);
       observer.disconnect();
     };
-  }, [slot]);
+  }, [enabled, slot]);
 
-  if (!ADSENSE_AD_CLIENT || !slot || hidden) return null;
+  if (!enabled || !ADSENSE_AD_CLIENT || !slot || hidden) return null;
 
   return (
     <div className={`ad-unit-slot${className ? ` ${className}` : ""}`}>

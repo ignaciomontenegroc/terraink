@@ -9,7 +9,7 @@ import { usePosterContext } from "./PosterContext";
 import { useMapSync } from "@/features/map/application/useMapSync";
 import MapPreview from "@/features/map/ui/MapPreview";
 import AdUnit from "@/shared/ui/AdUnit";
-import { AD_SLOT_SIDEBAR } from "@/core/config";
+import { AD_SLOT_SIDEBAR, ADS_SIDEBAR_ENABLED } from "@/core/config";
 import MarkerOverlay from "@/features/markers/ui/MarkerOverlay";
 import RouteOverlay from "@/features/routes/ui/RouteOverlay";
 import RouteEndpointsOverlay from "@/features/routes/ui/RouteEndpointsOverlay";
@@ -598,7 +598,12 @@ export default function PreviewPanel() {
           markers={markersLabel}
           coordinates={coordinatesLabel}
         />
-        <AdUnit slot={AD_SLOT_SIDEBAR} format="rectangle" className="sidebar-ad-slot" />
+        <AdUnit
+          slot={AD_SLOT_SIDEBAR}
+          enabled={ADS_SIDEBAR_ENABLED}
+          format="rectangle"
+          className="sidebar-ad-slot"
+        />
       </div>
     </section>
   );
