@@ -59,7 +59,6 @@ export const ADS_MODAL_ENABLED = adTypeEnabled(
   import.meta.env.VITE_ADS_MODAL_ENABLED,
 );
 
-export const ADSENSE_CLIENT = import.meta.env.VITE_ADSENSE_CLIENT ?? "";
 export const ADSENSE_AD_CLIENT = import.meta.env.VITE_ADSENSE_AD_CLIENT ?? "";
 export const AD_SLOT_INFEED = import.meta.env.VITE_AD_SLOT_INFEED ?? "";
 export const AD_SLOT_SIDEBAR = import.meta.env.VITE_AD_SLOT_SIDEBAR ?? "";

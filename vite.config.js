@@ -42,9 +42,9 @@ function adsTxtPlugin() {
       resolvedConfig = config;
     },
     closeBundle() {
-      const clientId = resolvedConfig.env.VITE_ADSENSE_CLIENT;
+      const clientId = resolvedConfig.env.VITE_ADSENSE_PUBLISHER_ID;
       if (!clientId) {
-        console.warn("[ads-txt] VITE_ADSENSE_CLIENT is not set — skipping ads.txt generation");
+        console.warn("[ads-txt] VITE_ADSENSE_PUBLISHER_ID is not set — skipping ads.txt generation");
         return;
       }
       const outDir = path.resolve(resolvedConfig.root, resolvedConfig.build.outDir);
