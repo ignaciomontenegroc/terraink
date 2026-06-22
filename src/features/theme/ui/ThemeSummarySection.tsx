@@ -70,7 +70,6 @@ export default function ThemeSummarySection({
                 key={`ad-theme-${i}`}
                 slot={AD_SLOT_INFEED}
                 enabled={ADS_INFEED_ENABLED}
-                format="rectangle"
               />,
             ];
           }

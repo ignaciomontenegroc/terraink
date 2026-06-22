@@ -444,7 +444,6 @@ export default function MapSettingsSection({
                 <AdUnit
                   slot={AD_SLOT_INFEED}
                   enabled={ADS_INFEED_ENABLED}
-                  format="rectangle"
                 />
               </section>
             ))}

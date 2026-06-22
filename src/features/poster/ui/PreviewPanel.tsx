@@ -601,7 +601,6 @@ export default function PreviewPanel() {
         <AdUnit
           slot={AD_SLOT_SIDEBAR}
           enabled={ADS_SIDEBAR_ENABLED}
-          format="rectangle"
           className="sidebar-ad-slot"
         />
       </div>

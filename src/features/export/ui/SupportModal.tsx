@@ -112,7 +112,6 @@ export default function SupportModal({
           <AdUnit
             slot={AD_SLOT_MODAL}
             enabled={ADS_MODAL_ENABLED}
-            format="rectangle"
             className="support-modal__ad"
           />
         </div>
