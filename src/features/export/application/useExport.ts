@@ -19,12 +19,6 @@ import {
   DEFAULT_POSTER_WIDTH_CM,
   DEFAULT_POSTER_HEIGHT_CM,
 } from "@/core/config";
-import { checkAdBlockerNow } from "@/features/export/application/adBlockDetection";
-import {
-  canDownloadWithAdBlock,
-  hoursUntilAdBlockReset,
-  recordAdBlockDownload,
-} from "@/features/export/application/adBlockLimit";
 
 export const ADBLOCK_LIMIT_EVENT = "terraink:adblock-limit";
 export const ADBLOCK_WARN_EVENT = "terraink:adblock-warn";
@@ -81,17 +75,9 @@ export function useExport() {
   );
   const hasVisibleOverlays = hasVisibleMarkers || visibleRoutes.length > 0;
 
-  const registerSuccessfulExport = useCallback((adBlocked: boolean) => {
+  const registerSuccessfulExport = useCallback(() => {
     const nextCount = readPosterExportCount() + 1;
     writePosterExportCount(nextCount);
-
-    if (adBlocked) {
-      // Show the ad blocker warning only on the first download
-      if (nextCount === 1) {
-        window.dispatchEvent(new CustomEvent(ADBLOCK_WARN_EVENT));
-      }
-      return;
-    }
 
     // Prompt cadence: follow on the first download and every 5th after → 1, 6, 11, …
     // Donate lives in the header; ad interstitials are handled by Google's
@@ -110,16 +96,6 @@ export function useExport() {
 
   const exportPoster = useCallback(
     async (format: ExportFormat) => {
-      const isAdBlocked = await checkAdBlockerNow();
-      if (isAdBlocked && !canDownloadWithAdBlock()) {
-        window.dispatchEvent(
-          new CustomEvent(ADBLOCK_LIMIT_EVENT, {
-            detail: { hoursUntilReset: hoursUntilAdBlockReset() },
-          }),
-        );
-        return;
-      }
-
       const map = mapRef.current;
       if (!map) {
         dispatch({ type: "SET_ERROR", error: "Map is not ready." });
@@ -170,8 +146,7 @@ export function useExport() {
             "svg",
           );
           await triggerDownloadBlob(svgBlob, svgFilename);
-          registerSuccessfulExport(isAdBlocked);
-          if (isAdBlocked) recordAdBlockDownload(readPosterExportCount());
+          registerSuccessfulExport();
           dispatch({ type: "SET_EXPORT_STATUS", exporting: false });
           return;
         }
@@ -226,8 +201,7 @@ export function useExport() {
           await triggerDownloadBlob(pngBlob, filename);
         }
 
-        registerSuccessfulExport(isAdBlocked);
-        if (isAdBlocked) recordAdBlockDownload(readPosterExportCount());
+        registerSuccessfulExport();
         dispatch({ type: "SET_EXPORT_STATUS", exporting: false });
       } catch (err) {
         const message = err instanceof Error ? err.message : "Export failed.";

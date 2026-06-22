@@ -21,6 +21,7 @@ import {
   ADBLOCK_WARN_EVENT,
   type SupportPromptState,
 } from "@/features/export/application/useExport";
+import { useAdBlockAnalytics } from "@/features/export/application/useAdBlockAnalytics";
 
 const AboutModal = lazy(() => import("@/shared/ui/AboutModal"));
 const SettingsPanel = lazy(() => import("@/features/poster/ui/SettingsPanel"));
@@ -70,6 +71,9 @@ function SettingsDrawer({
 
 export default function AppShell() {
   const { state, dispatch } = usePosterContext();
+
+  // Measure the ad-block rate for every visitor on load (analytics only).
+  useAdBlockAnalytics();
   const { isMarkerEditorActive } = state;
   const activeMarker =
     state.activeMarkerId !== null

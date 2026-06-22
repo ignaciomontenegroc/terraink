@@ -41,6 +41,10 @@ export { createPosterFilename } from "@/features/export/infrastructure/filenameG
 
 export { triggerDownloadBlob } from "@/features/export/infrastructure/fileDownloader";
 
+/* ── Analytics ── */
+
+export { trackEvent } from "@/core/analytics/gtagAnalytics";
+
 /* ── Routes ── */
 
 export { gpxParser } from "@/features/routes/infrastructure/gpxParser";
